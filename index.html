@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kugu — Premium Floral Boutique</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    /* ── Tailwind theme extension ── */
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif:  ['"Playfair Display"', 'Georgia', 'serif'],
+            sans:   ['"DM Sans"', 'sans-serif'],
+          },
+          colors: {
+            blush:   { DEFAULT: '#f9a8b8', light: '#fde8ed', dark: '#e8768c' },
+            sage:    { DEFAULT: '#7a9e7e', light: '#d4e6d5' },
+            cream:   { DEFAULT: '#fdf6f0', dark: '#f5e8d8' },
+            charcoal:{ DEFAULT: '#1e1e1e' },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Global base styles ── */
+    body { font-family: 'DM Sans', sans-serif; color: #1e1e1e; background: #fdf6f0; }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* ── Hero carousel ── */
+    .slide { display: none; }
+    .slide.active { display: flex; }
+
+    /* ── Product card hover actions ── */
+    .card-img-wrap { overflow: hidden; }
+    .card-img-wrap img { transition: transform .45s ease; }
+    .card-img-wrap:hover img { transform: scale(1.08); }
+
+    /* ── Smooth scroll ── */
+    html { scroll-behavior: smooth; }
+
+    /* ── Mobile menu toggle ── */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* ── Star rating colour ── */
+    .stars { color: #f6a623; }
+
+    /* ── Section subtitle ── */
+    .section-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .875rem;
+      color: #6b7280;
+      max-width: 42rem;
+      margin: .5rem auto 0;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* ── Filter tab active state ── */
+    .filter-tab.active {
+      border-bottom: 2px solid #e8768c;
+      color: #e8768c;
+      font-weight: 600;
+    }
+
+    /* ══ PRODUCT DETAIL MODAL ══ */
+    #product-modal {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+    #product-modal.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    #modal-panel {
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+    }
+    #product-modal.open #modal-panel {
+      transform: translateX(0);
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    .qty-btn {
+      width: 2rem; height: 2rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background .2s, border-color .2s;
+      font-size: .875rem;
+    }
+    .qty-btn:hover { background: #fde8ed; border-color: #e8768c; }
+    .thumb-btn { transition: border-color .2s, opacity .2s; }
+    .thumb-btn.active { border-color: #e8768c !important; opacity: 1 !important; }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <div id="announcement-bar" class="bg-charcoal text-white text-xs text-center py-2 px-4 relative transition duration-300">
+    <span>🌸 All featured products <strong>50% off</strong> — <a href="#featured" class="underline hover:text-blush transition">Shop Now</a></span>
+    <button onclick="document.getElementById('announcement-bar').classList.add('hidden')" aria-label="Close announcement" class="absolute right-4 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 transition">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <a href="#" class="flex items-center gap-2 flex-shrink-0" aria-label="Kugu Home">
+          <span class="text-blush-dark text-2xl"><i class="fa-solid fa-seedling"></i></span>
+          <span class="font-serif text-2xl font-bold tracking-wide text-charcoal">Kugu.</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8" aria-label="Primary navigation">
+          <a href="#hero"         class="text-sm font-medium hover:text-blush-dark transition">Home</a>
+          <a href="#products"     class="text-sm font-medium hover:text-blush-dark transition">Shop</a>
+          <a href="#promo-banner" class="text-sm font-medium hover:text-blush-dark transition">About</a>
+          <a href="#blog"         class="text-sm font-medium hover:text-blush-dark transition">Blog</a>
+          <a href="#newsletter"   class="text-sm font-medium hover:text-blush-dark transition">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:flex items-center border border-gray-200 rounded-full px-3 py-1.5 gap-2">
+            <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs"></i>
+            <input type="search" placeholder="Search store…" aria-label="Search store"
+                   class="text-xs bg-transparent outline-none w-28 lg:w-40 placeholder-gray-400" />
+          </div>
+
+          <button aria-label="My account" class="text-gray-500 hover:text-blush-dark transition text-lg">
+            <i class="fa-regular fa-user"></i>
+          </button>
+
+          <button aria-label="View cart, 3 items" class="relative text-gray-500 hover:text-blush-dark transition text-lg">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="absolute -top-1.5 -right-1.5 bg-blush-dark text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">3</span>
+          </button>
+
+          <button id="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false"
+                  class="md:hidden text-gray-600 hover:text-blush-dark transition text-lg">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <nav id="mobile-menu" class="md:hidden border-t border-gray-100 bg-white px-4 pb-4" aria-label="Mobile navigation">
+      <ul class="space-y-3 pt-3">
+        <li><a href="#hero"         class="block text-sm font-medium py-1 hover:text-blush-dark transition">Home</a></li>
+        <li><a href="#products"     class="block text-sm font-medium py-1 hover:text-blush-dark transition">Shop</a></li>
+        <li><a href="#promo-banner" class="block text-sm font-medium py-1 hover:text-blush-dark transition">About</a></li>
+        <li><a href="#blog"         class="block text-sm font-medium py-1 hover:text-blush-dark transition">Blog</a></li>
+        <li><a href="#newsletter"   class="block text-sm font-medium py-1 hover:text-blush-dark transition">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="hero" class="relative overflow-hidden" aria-label="Hero promotional slider">
+
+      <div class="slide active relative min-h-[480px] md:min-h-[580px] bg-cream items-center">
+        <div class="absolute right-0 top-0 w-1/2 h-full hidden sm:block">
+          <img src="https://images.unsplash.com/photo-1588625500633-a0cd518f0f60?w=900&q=80"
+               alt="Elegant spring flower arrangement with tulips and eggs"
+               class="w-full h-full object-cover object-left opacity-90" />
+          <div class="absolute inset-0 bg-gradient-to-r from-cream via-cream/60 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+          <p class="text-xs font-semibold tracking-widest text-blush-dark uppercase mb-3">Fresh Premium Flowers</p>
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-charcoal leading-tight mb-4">
+            Happy<br />Mother's Day!
+          </h1>
+          <p class="text-gray-500 text-base mb-8 max-w-xs">Beautiful handcrafted arrangements your mom will absolutely cherish.</p>
+          <a href="#products"
+             class="inline-block bg-blush-dark text-white text-sm font-semibold px-8 py-3 rounded-full hover:bg-blush transition shadow-md">
+            Shop Collection
+          </a>
+        </div>
+      </div>
+
+      <div class="slide relative min-h-[480px] md:min-h-[580px] bg-sage-light items-center">
+        <div class="absolute right-0 top-0 w-1/2 h-full hidden sm:block">
+          <img src="https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=900&q=80"
+               alt="Romantic red roses arrangement"
+               class="w-full h-full object-cover object-center opacity-90" />
+          <div class="absolute inset-0 bg-gradient-to-r from-sage-light via-sage-light/60 to-transparent"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+          <p class="text-xs font-semibold tracking-widest text-sage uppercase mb-3">Summer Collection</p>
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-charcoal leading-tight mb-4">
+            Fresh Blooms<br />Every Single Day.
+          </h1>
+          <p class="text-gray-500 text-base mb-8 max-w-xs">Discover our curated seasonal arrangements, delivered straight to your door.</p>
+          <a href="#featured"
+             class="inline-block bg-sage text-white text-sm font-semibold px-8 py-3 rounded-full hover:bg-sage-DEFAULT/80 transition shadow-md">
+            Explore Now
+          </a>
+        </div>
+      </div>
+
+      <button onclick="changeSlide(-1)" aria-label="Previous slide"
+              class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white shadow rounded-full w-10 h-10 flex items-center justify-center z-20 transition">
+        <i class="fa-solid fa-chevron-left text-sm text-charcoal"></i>
+      </button>
+      <button onclick="changeSlide(1)" aria-label="Next slide"
+              class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white shadow rounded-full w-10 h-10 flex items-center justify-center z-20 transition">
+        <i class="fa-solid fa-chevron-right text-sm text-charcoal"></i>
+      </button>
+    </section>
+
+    <section aria-label="Store features" class="bg-white border-y border-gray-100 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ul class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-orange-50 flex items-center justify-center text-orange-400 text-lg">
+              <i class="fa-solid fa-truck-fast"></i>
+            </span>
+            <div>
+              <h3 class="text-sm font-semibold text-charcoal">Free Delivery</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-snug">Free shipping on orders over $50.</p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-green-50 flex items-center justify-center text-green-500 text-lg">
+              <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <div>
+              <h3 class="text-sm font-semibold text-charcoal">Secure Payment</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-snug">100% encrypted checkout systems.</p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-blush-light flex items-center justify-center text-blush-dark text-lg">
+              <i class="fa-solid fa-leaf"></i>
+            </span>
+            <div>
+              <h3 class="text-sm font-semibold text-charcoal">Fresh Guarantee</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-snug">Blooms sourced daily from local farms.</p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-purple-50 flex items-center justify-center text-purple-400 text-lg">
+              <i class="fa-solid fa-palette"></i>
+            </span>
+            <div>
+              <h3 class="text-sm font-semibold text-charcoal">Curated Designs</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-snug">Expertly styled by master florists.</p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <section id="products" aria-labelledby="new-products-heading" class="py-16 bg-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-10">
+          <h2 id="new-products-heading" class="font-serif text-3xl md:text-4xl font-bold">New Products</h2>
+          <p class="section-sub">A perfect blend of creativity, energy, and love. Let us arrange a smile for you.</p>
+        </div>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <li data-product-id="spring-snowflake" data-product-name="Spring Snowflake"
+              class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">Sale</span>
+              <img src="https://images.unsplash.com/photo-1487530811015-780d4c6cd4ce?w=500&q=80" alt="Spring Snowflake" class="w-full h-64 object-cover" loading="lazy" />
+              <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <h3 class="font-serif text-base font-semibold mb-1">Spring Snowflake</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$39.00</span>
+                <span class="text-gray-400 text-xs line-through">$49.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="nest-bouquet" data-product-name="Nest Bouquet"
+              class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
+              <img src="https://images.unsplash.com/photo-1549226755-27e69e08e0d9?w=500&q=80" alt="Nest Bouquet" class="w-full h-64 object-cover" loading="lazy" />
+              <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <h3 class="font-serif text-base font-semibold mb-1">Nest Bouquet</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$60.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="scarlet-sage" data-product-name="Scarlet Sage"
+              class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">Sale</span>
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Scarlet Sage" class="w-full h-64 object-cover" loading="lazy" />
+              <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <h3 class="font-serif text-base font-semibold mb-1">Scarlet Sage</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$28.00</span>
+                <span class="text-gray-400 text-xs line-through">$45.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="foxglove-flower" data-product-name="Foxglove Flower"
+              class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
+              <img src="https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=500&q=80" alt="Foxglove Flower" class="w-full h-64 object-cover" loading="lazy" />
+              <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
+                <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+              <h3 class="font-serif text-base font-semibold mb-1">Foxglove Flower</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$19.00</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <section id="promo-banner" aria-label="Valentine promotional section" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+          <div class="rounded-2xl overflow-hidden shadow-sm">
+            <img src="https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=800&q=80"
+                 alt="Florist workshop layout arrangement" class="w-full h-96 md:h-[450px] object-cover" loading="lazy" />
+          </div>
+
+          <div class="space-y-6">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight">
+              Surprise Your Valentine!<br />
+              <span class="italic font-normal text-blush-dark">Let us arrange a smile for her.</span>
+            </h2>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              When flowers are your inspiration to create lasting memories, whatever the occasion, let our bespoke craft help tell your story.
+            </p>
+
+            <ul class="space-y-3.5 text-sm text-gray-600" aria-label="Floral service highlights">
+              <li class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-blush-light flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-check text-blush-dark text-[10px]"></i>
+                </span>
+                Premium hand-picked seasonal stems.
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-blush-light flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-check text-blush-dark text-[10px]"></i>
+                </span>
+                Bespoke design custom-tailored to order.
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-blush-light flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-check text-blush-dark text-[10px]"></i>
+                </span>
+                Guaranteed pristine local prompt delivery.
+              </li>
+            </ul>
+
+            <a href="#featured" class="inline-block bg-blush-dark text-white text-sm font-semibold px-8 py-3 rounded-full hover:bg-blush transition shadow-md">
+              View Details
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="featured" aria-labelledby="featured-heading" class="py-16 bg-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-8">
+          <h2 id="featured-heading" class="font-serif text-3xl md:text-4xl font-bold">Featured Items</h2>
+          <p class="section-sub">Bespoke arrangement solutions created by our in-house styling professionals.</p>
+        </div>
+
+        <div class="flex justify-center gap-8 mb-10" role="tablist" aria-label="Product filter tabs">
+          <button class="filter-tab active pb-1 text-sm font-medium transition" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-tab pb-1 text-sm font-medium text-gray-400 hover:text-blush-dark transition" data-filter="bouquets" role="tab" aria-selected="false">Bouquets</button>
+          <button class="filter-tab pb-1 text-sm font-medium text-gray-400 hover:text-blush-dark transition" data-filter="birthdays" role="tab" aria-selected="false">Birthdays</button>
+        </div>
+
+        <ul id="featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <li data-product-id="lily-majesty" data-product-name="Lily Majesty Palm" data-category="bouquets"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-30%</span>
+              <img src="https://images.unsplash.com/photo-1596438459194-f275f413d6ff?w=500&q=80" alt="Lily Majesty Palm" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Lily Majesty Palm</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$19.00</span>
+                <span class="text-gray-400 text-xs line-through">$49.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="mini-roses" data-product-name="Mini Roses" data-category="birthdays"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-15%</span>
+              <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=500&q=80" alt="Mini Roses" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Mini Roses</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$74.00</span>
+                <span class="text-gray-400 text-xs line-through">$99.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="spring-snowflake" data-product-name="Spring Snowflake" data-category="bouquets"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
+              <img src="https://images.unsplash.com/photo-1548460977-6c06e5b01f18?w=500&q=80" alt="Spring Snowflake" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Spring Snowflake</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$25.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="nest-bouquet" data-product-name="Nest Bouquet" data-category="birthdays"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-30%</span>
+              <img src="https://images.unsplash.com/photo-1563241527-3004b7be0afc?w=500&q=80" alt="Nest Bouquet" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Nest Bouquet</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$60.00</span>
+                <span class="text-gray-400 text-xs line-through">$99.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="sweet-alyssum" data-product-name="Sweet Alyssum" data-category="bouquets"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-10%</span>
+              <img src="https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?w=500&q=80" alt="Sweet Alyssum" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Sweet Alyssum</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$15.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="summer-savory" data-product-name="Summer Savory" data-category="birthdays"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-25%</span>
+              <img src="https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=500&q=80" alt="Summer Savory" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Summer Savory</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$38.00</span>
+                <span class="text-gray-400 text-xs line-through">$55.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="rock-bouquet" data-product-name="Rock Bouquet" data-category="bouquets"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-15%</span>
+              <img src="https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=500&q=80" alt="Rock Bouquet" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Rock Bouquet</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$38.00</span>
+              </div>
+            </div>
+          </li>
+
+          <li data-product-id="majesty-palm" data-product-name="Majesty Palm" data-category="birthdays"
+              class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
+            <div class="card-img-wrap relative">
+              <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
+              <img src="https://images.unsplash.com/photo-1605444404823-55c1cdfb7fba?w=500&q=80" alt="Majesty Palm" class="w-full h-56 object-cover" loading="lazy" />
+            </div>
+            <div class="p-4 text-center">
+              <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+              <h3 class="font-serif text-sm font-semibold mb-1">Majesty Palm</h3>
+              <div class="flex items-center gap-2 justify-center">
+                <span class="text-blush-dark font-bold text-sm">$19.00</span>
+                <span class="text-gray-400 text-xs line-through">$29.00</span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <section aria-label="Customer testimonials" class="bg-white py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+
+        <span class="text-blush-light text-8xl font-serif leading-none select-none absolute -top-4 left-1/2 -translate-x-1/2 opacity-40">"</span>
+
+        <blockquote class="relative z-10 font-serif italic text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
+          The bouquet arrangements are always exceptionally fresh, arriving perfectly on time. Kugu has completely changed how I decorate my retail display spaces.
+        </blockquote>
+
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80"
+             alt="Customer Toru" class="w-16 h-16 rounded-full mx-auto object-cover border-2 border-blush-light mb-3" loading="lazy" />
+
+        <p class="font-semibold text-sm text-charcoal">Toru / CEO</p>
+
+        <div class="flex items-center justify-center gap-4 mt-6">
+          <button aria-label="Previous testimonial" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-blush-dark hover:text-blush-dark transition">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+          </button>
+          <button aria-label="Next testimonial" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-blush-dark hover:text-blush-dark transition">
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section aria-labelledby="team-heading" class="py-16 bg-cream">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-10">
+          <h2 id="team-heading" class="font-serif text-3xl md:text-4xl font-bold">Flower Experts</h2>
+          <p class="section-sub">Meet our dedicated, artistic team of design coordinators.</p>
+        </div>
+
+        <ul class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+
+          <li>
+            <div class="w-36 h-36 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-sm">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&q=80" alt="Marcus Alonso" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <h3 class="font-serif text-base font-semibold">Marcus Alonso</h3>
+            <p class="text-xs text-gray-400 mt-1">Head Florist</p>
+          </li>
+
+          <li>
+            <div class="w-36 h-36 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
+              <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&q=80" alt="Shara H'leen" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <h3 class="font-serif text-base font-semibold">Shara H'leen</h3>
+            <p class="text-xs text-gray-400 mt-1">Photographer</p>
+          </li>
+
+          <li>
+            <div class="w-36 h-36 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80" alt="Tervi Grisse" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <h3 class="font-serif text-base font-semibold">Tervi Grisse</h3>
+            <p class="text-xs text-gray-400 mt-1">Founder</p>
+          </li>
+
+          <li>
+            <div class="w-36 h-36 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80" alt="Aimee Dannej" class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <h3 class="font-serif text-base font-semibold">Aimee Dannej</h3>
+            <p class="text-xs text-gray-400 mt-1">Florist</p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <section id="blog" aria-labelledby="blog-heading" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-10">
+          <h2 id="blog-heading" class="font-serif text-3xl md:text-4xl font-bold">From Our Blog</h2>
+          <p class="section-sub">Bespoke write-ups covering seasonal handling guides and boutique floral care insights.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden mb-4">
+              <img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?w=700&q=80" alt="Blog Post" class="w-full h-52 object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+            </a>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 text-xs text-gray-400">
+                <span class="text-blush-dark font-semibold uppercase tracking-wide">Flower Beauty</span>
+                <span>•</span>
+                <time datetime="2026-03-15">March 15, 2026</time>
+              </div>
+              <h3 class="font-serif text-lg font-semibold leading-snug">
+                <a href="#" class="hover:text-blush-dark transition">Flower Beauty & Arrangement Tips</a>
+              </h3>
+              <p class="text-xs text-gray-500 leading-relaxed line-clamp-3">
+                Discover the fundamental principles of setting up stunning centerpieces using simple household items.
+              </p>
+              <a href="#" class="inline-flex items-center gap-1 text-xs font-semibold text-blush-dark hover:underline mt-1">
+                Continue Reading <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden mb-4">
+              <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=80" alt="Blog Post" class="w-full h-52 object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+            </a>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 text-xs text-gray-400">
+                <span class="text-blush-dark font-semibold uppercase tracking-wide">Local Florista</span>
+                <span>•</span>
+                <time datetime="2026-04-08">April 08, 2026</time>
+              </div>
+              <h3 class="font-serif text-lg font-semibold leading-snug">
+                <a href="#" class="hover:text-blush-dark transition">Supporting Local Florists & Farms</a>
+              </h3>
+              <p class="text-xs text-gray-500 leading-relaxed line-clamp-3">
+                How choosing locally cultivated, sustainable flowers impacts micro-ecosystems and farming networks.
+              </p>
+              <a href="#" class="inline-flex items-center gap-1 text-xs font-semibold text-blush-dark hover:underline mt-1">
+                Continue Reading <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="group">
+            <a href="#" class="block rounded-2xl overflow-hidden mb-4">
+              <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?w=700&q=80" alt="Blog Post" class="w-full h-52 object-cover transition duration-300 group-hover:scale-105" loading="lazy" />
+            </a>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 text-xs text-gray-400">
+                <span class="text-blush-dark font-semibold uppercase tracking-wide">Flower Power</span>
+                <span>•</span>
+                <time datetime="2026-04-20">April 20, 2026</time>
+              </div>
+              <h3 class="font-serif text-lg font-semibold leading-snug">
+                <a href="#" class="hover:text-blush-dark transition">The Language of Flowers Explained</a>
+              </h3>
+              <p class="text-xs text-gray-500 leading-relaxed line-clamp-3">
+                Dive deep into historical floral symbolism to find the perfect subtle message for your next gift.
+              </p>
+              <a href="#" class="inline-flex items-center gap-1 text-xs font-semibold text-blush-dark hover:underline mt-1">
+                Continue Reading <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="newsletter" aria-labelledby="newsletter-heading" class="py-16 bg-cream border-t border-gray-100">
+      <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
+        <h2 id="newsletter-heading" class="font-serif text-3xl md:text-4xl font-bold mb-2">Join the Colorful Bunch!</h2>
+        <p class="text-sm text-gray-500 mb-8">Subscribe for seasonal bouquet launches and custom exclusive discount tiers.</p>
+
+        <form class="flex items-stretch gap-0 rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm max-w-md mx-auto" onsubmit="return false;" aria-label="Newsletter subscription form">
+          <label for="email-input" class="sr-only">Email address</label>
+          <input id="email-input" type="email" placeholder="Your email address…" class="flex-1 px-5 py-3 text-sm bg-transparent outline-none placeholder-gray-400 min-w-0" required />
+          <button type="submit" class="flex-shrink-0 bg-blush-dark hover:bg-blush transition text-white text-xs font-bold px-6 py-3 uppercase tracking-widest">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-charcoal text-gray-400" aria-label="Site footer">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+
+        <div class="lg:col-span-2 space-y-4">
+          <a href="#" class="flex items-center gap-2" aria-label="Kugu Home">
+            <span class="text-blush text-2xl"><i class="fa-solid fa-seedling"></i></span>
+            <span class="font-serif text-2xl font-bold text-white">Kugu.</span>
+          </a>
+          <p class="text-sm leading-relaxed text-gray-400 max-w-xs">
+            A beautiful, carefully designed blend of creative floral presentation systems.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:border-blush hover:text-blush transition"><i class="fa-brands fa-facebook-f text-xs"></i></a>
+            <a href="#" aria-label="Twitter" class="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:border-blush hover:text-blush transition"><i class="fa-brands fa-x-twitter text-xs"></i></a>
+            <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center hover:border-blush hover:text-blush transition"><i class="fa-brands fa-instagram text-xs"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-white text-sm font-semibold mb-5 uppercase tracking-widest">Information</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="hover:text-white transition">Search Terms</a></li>
+            <li><a href="#" class="hover:text-white transition">Store Location</a></li>
+            <li><a href="#" class="hover:text-white transition">Orders & Returns</a></li>
+            <li><a href="#" class="hover:text-white transition">About Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white text-sm font-semibold mb-5 uppercase tracking-widest">My Account</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="hover:text-white transition">My Account</a></li>
+            <li><a href="#" class="hover:text-white transition">Sitemap</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white text-sm font-semibold mb-5 uppercase tracking-widest">Customer Service</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="hover:text-white transition">FAQ's</a></li>
+            <li><a href="#" class="hover:text-white transition">Returns</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-gray-600">&copy; <span id="footer-year">2026</span> Kugu. All Rights Reserved.</p>
+        <div class="flex items-center gap-2" aria-label="Payment methods">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" class="h-5 opacity-50 hover:opacity-80 transition" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Mastercard" class="h-5 opacity-50 hover:opacity-80 transition" />
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-product-name" class="fixed inset-0 z-[100] flex justify-end">
+    <div id="modal-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeModal()"></div>
+    <aside id="modal-panel" class="relative z-10 w-full max-w-lg bg-white h-full overflow-y-auto shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
+        <div class="flex items-center gap-2">
+          <span class="text-blush-dark"><i class="fa-solid fa-seedling"></i></span>
+          <span class="font-serif font-bold text-lg text-charcoal">Kugu.</span>
+        </div>
+        <button onclick="closeModal()" aria-label="Close" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-blush-dark hover:text-blush-dark transition">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 px-6 py-6 space-y-6">
+        <div class="rounded-2xl overflow-hidden bg-cream">
+          <img id="modal-main-img" src="" alt="" class="w-full h-72 sm:h-80 object-cover transition-opacity duration-300" />
+        </div>
+        <div id="modal-thumbs" class="flex gap-3"></div>
+        <div class="space-y-1">
+          <span id="modal-badge" class="inline-block text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"></span>
+          <h2 id="modal-product-name" class="font-serif text-2xl font-bold text-charcoal"></h2>
+        </div>
+        <div id="modal-stars" class="stars text-sm flex items-center gap-1"></div>
+        <div class="flex items-baseline gap-3">
+          <span id="modal-price" class="text-blush-dark font-bold text-2xl"></span>
+          <span id="modal-original-price" class="text-gray-400 text-sm line-through"></span>
+        </div>
+        <p id="modal-desc" class="text-sm text-gray-500 leading-relaxed"></p>
+
+        <div class="flex items-center gap-4 pt-2">
+          <div class="flex items-center gap-2" role="group" aria-label="Quantity">
+            <button class="qty-btn" onclick="changeQty(-1)"><i class="fa-solid fa-minus text-xs"></i></button>
+            <span id="modal-qty" class="w-8 text-center text-sm font-semibold">1</span>
+            <button class="qty-btn" onclick="changeQty(1)"><i class="fa-solid fa-plus text-xs"></i></button>
+          </div>
+          <button onclick="addToCart()" class="flex-1 bg-blush-dark hover:bg-blush transition text-white text-sm font-semibold py-3 rounded-full shadow-md flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+          </button>
+        </div>
+
+        <div id="cart-toast" class="hidden items-center gap-3 bg-green-50 border border-green-200 text-green-700 text-xs font-medium px-4 py-3 rounded-xl">
+          <i class="fa-solid fa-circle-check text-green-500"></i>
+          <span id="cart-toast-msg"></span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const PRODUCTS = {
+      'spring-snowflake': {
+        name:     'Spring Snowflake',
+        badge:    'Sale',
+        badgeBg:  '#e8768c',
+        price:    '$39.00',
+        original: '$49.00',
+        stars:    4,
+        desc:     'A pristine white tulip arrangement that captures the delicate first breath of spring.',
+        images: [
+          'https://images.unsplash.com/photo-1487530811015-780d4c6cd4ce?w=800&q=80',
+          'https://images.unsplash.com/photo-1457089328109-e5d9bd499191?w=800&q=80'
+        ],
+      },
+      'nest-bouquet': {
+        name:     'Nest Bouquet',
+        badge:    'New',
+        badgeBg:  '#1e1e1e',
+        price:    '$60.00',
+        original: '',
+        stars:    5,
+        desc:     'Lush garden peonies in blush and cream, cradled in a rounded nest silhouette.',
+        images: ['https://images.unsplash.com/photo-1549226755-27e69e08e0d9?w=800&q=80'],
+      },
+      'scarlet-sage': {
+        name:     'Scarlet Sage',
+        badge:    'Sale',
+        badgeBg:  '#e8768c',
+        price:    '$28.00',
+        original: '$45.00',
+        stars:    4,
+        desc:     'Vivid magenta blooms that command attention the moment they enter a room.',
+        images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'],
+      },
+      'foxglove-flower': {
+        name:     'Foxglove Flower',
+        badge:    'New',
+        badgeBg:  '#1e1e1e',
+        price:    '$19.00',
+        original: '',
+        stars:    4.5,
+        desc:     'Tall, stately foxglove spires in shades of violet and soft lavender.',
+        images: ['https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=800&q=80'],
+      },
+      'lily-majesty': {
+        name:     'Lily Majesty Palm',
+        badge:    '-30%',
+        badgeBg:  '#e8768c',
+        price:    '$19.00',
+        original: '$49.00',
+        stars:    4,
+        desc:     'Coral and pink oriental lilies at peak bloom, surrounded by tropical leaves.',
+        images: ['https://images.unsplash.com/photo-1596438459194-f275f413d6ff?w=800&q=80'],
+      },
+      'mini-roses': {
+        name:     'Mini Roses',
+        badge:    '-15%',
+        badgeBg:  '#22c55e',
+        price:    '$74.00',
+        original: '$99.00',
+        stars:    5,
+        desc:     'A curated cluster of miniature roses in the softest blush pink configuration.',
+        images: ['https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=800&q=80'],
+      },
+      'sweet-alyssum': {
+        name:     'Sweet Alyssum',
+        badge:    '-10%',
+        badgeBg:  '#e8768c',
+        price:    '$15.00',
+        original: '',
+        stars:    4,
+        desc:     'Clouds of tiny white honey-scented alyssum flowers, mounded into a lush garden pot.',
+        images: ['https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?w=800&q=80'],
+      },
+      'summer-savory': {
+        name:     'Summer Savory',
+        badge:    '-25%',
+        badgeBg:  '#22c55e',
+        price:    '$38.00',
+        original: '$55.00',
+        stars:    5,
+        desc:     'Sculptural purple allium globes and feathery herbs combine in this bold layout.',
+        images: ['https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=800&q=80'],
+      },
+      'rock-bouquet': {
+        name:     'Rock Bouquet',
+        badge:    '-15%',
+        badgeBg:  '#e8768c',
+        price:    '$38.00',
+        original: '',
+        stars:    4,
+        desc:     'Deep crimson roses and dark foliage make the Rock Bouquet a dramatic statement.',
+        images: ['https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=800&q=80'],
+      },
+      'majesty-palm': {
+        name:     'Majesty Palm',
+        badge:    'New',
+        badgeBg:  '#1e1e1e',
+        price:    '$19.00',
+        original: '$29.00',
+        stars:    4.5,
+        desc:     'Soft violet tulips loosely gathered in a natural, unstructured bouquet layout.',
+        images: ['https://images.unsplash.com/photo-1605444404823-55c1cdfb7fba?w=800&q=80'],
+      }
+    };
+
+    /* ── Carousel System ── */
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+    function showSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+    }
+    function changeSlide(dir) { showSlide(current + dir); }
+    setInterval(() => changeSlide(1), 5000);
+
+    /* ── Mobile Navigation Toggle ── */
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen.toString());
+    });
+
+    /* ── Functional Tab Filters Engine ── */
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(t => {
+          t.classList.remove('active', 'text-blush-dark');
+          t.classList.add('text-gray-400');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.classList.remove('text-gray-400');
+        tab.setAttribute('aria-selected', 'true');
+
+        const filterValue = tab.getAttribute('data-filter');
+        document.querySelectorAll('.featured-card').forEach(card => {
+          if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    /* ── Modal Control Logic ── */
+    const modal = document.getElementById('product-modal');
+    const mainImg = document.getElementById('modal-main-img');
+    const thumbsWrap = document.getElementById('modal-thumbs');
+    const badgeEl = document.getElementById('modal-badge');
+    const nameEl = document.getElementById('modal-product-name');
+    const starsEl = document.getElementById('modal-stars');
+    const priceEl = document.getElementById('modal-price');
+    const origEl = document.getElementById('modal-original-price');
+    const descEl = document.getElementById('modal-desc');
+    const qtyEl = document.getElementById('modal-qty');
+    const toast = document.getElementById('cart-toast');
+    const toastMsg = document.getElementById('cart-toast-msg');
+    let activeProduct = null;
+    let qty = 1;
+
+    function buildStars(rating) {
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        if (i <= Math.floor(rating)) html += '<i class="fa-solid fa-star"></i>';
+        else if (i - 0.5 <= rating) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+        else html += '<i class="fa-regular fa-star"></i>';
+      }
+      return html;
+    }
+
+    function openModal(productId) {
+      const p = PRODUCTS[productId];
+      if (!p) return;
+      activeProduct = p;
+      qty = 1;
+      qtyEl.textContent = '1';
+      toast.classList.add('hidden');
+
+      badgeEl.textContent = p.badge;
+      badgeEl.style.background = p.badgeBg;
+      nameEl.textContent = p.name;
+      starsEl.innerHTML = buildStars(p.stars);
+      priceEl.textContent = p.price;
+      origEl.textContent = p.original;
+      descEl.textContent = p.desc;
+      mainImg.src = p.images[0];
+
+      thumbsWrap.innerHTML = '';
+      modal.classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+
+    function changeQty(delta) {
+      qty = Math.max(1, qty + delta);
+      qtyEl.textContent = qty;
+    }
+
+    function addToCart() {
+      if (!activeProduct) return;
+      toastMsg.textContent = `${qty} × ${activeProduct.name} added to cart!`;
+      toast.classList.remove('hidden');
+      setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+    }
+
+    document.querySelectorAll('[data-product-id]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('button')) return; // Avoid triggering modal if internal toolbar button is clicked
+        openModal(card.dataset.productId);
+      });
+    });
+
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
