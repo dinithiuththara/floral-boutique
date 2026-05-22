@@ -147,9 +147,9 @@
             <i class="fa-regular fa-user"></i>
           </button>
 
-          <button aria-label="View cart, 3 items" class="relative text-gray-500 hover:text-blush-dark transition text-lg">
+          <button aria-label="View cart" class="relative text-gray-500 hover:text-blush-dark transition text-lg">
             <i class="fa-solid fa-bag-shopping"></i>
-            <span class="absolute -top-1.5 -right-1.5 bg-blush-dark text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">3</span>
+            <span id="cart-badge" class="hidden absolute -top-1.5 -right-1.5 bg-blush-dark text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
           </button>
 
           <button id="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false"
@@ -177,8 +177,8 @@
 
       <div class="slide active relative min-h-[480px] md:min-h-[580px] bg-cream items-center">
         <div class="absolute right-0 top-0 w-1/2 h-full hidden sm:block">
-          <img src="https://images.unsplash.com/photo-1588625500633-a0cd518f0f60?w=900&q=80"
-               alt="Elegant spring flower arrangement with tulips and eggs"
+          <img src="https://images.unsplash.com/photo-1617806118233-18e1db207f62?w=900&auto=format&fit=crop&q=80"
+               alt="Elegant interior room design bouquet styling context"
                class="w-full h-full object-cover object-left opacity-90" />
           <div class="absolute inset-0 bg-gradient-to-r from-cream via-cream/60 to-transparent"></div>
         </div>
@@ -198,8 +198,8 @@
 
       <div class="slide relative min-h-[480px] md:min-h-[580px] bg-sage-light items-center">
         <div class="absolute right-0 top-0 w-1/2 h-full hidden sm:block">
-          <img src="https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=900&q=80"
-               alt="Romantic red roses arrangement"
+          <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=900&auto=format&fit=crop&q=80"
+               alt="Minimal workspace with fresh aesthetic botanical stems"
                class="w-full h-full object-cover object-center opacity-90" />
           <div class="absolute inset-0 bg-gradient-to-r from-sage-light via-sage-light/60 to-transparent"></div>
         </div>
@@ -288,7 +288,7 @@
               class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">Sale</span>
-              <img src="https://images.unsplash.com/photo-1487530811015-780d4c6cd4ce?w=500&q=80" alt="Spring Snowflake" class="w-full h-64 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=500&auto=format&fit=crop&q=80" alt="Spring Snowflake Arrangement" class="w-full h-64 object-cover" loading="lazy" />
               <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
@@ -308,7 +308,7 @@
               class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
-              <img src="https://images.unsplash.com/photo-1549226755-27e69e08e0d9?w=500&q=80" alt="Nest Bouquet" class="w-full h-64 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=500&auto=format&fit=crop&q=80" alt="Nest Bouquet Gift" class="w-full h-64 object-cover" loading="lazy" />
               <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
@@ -327,7 +327,7 @@
               class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">Sale</span>
-              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Scarlet Sage" class="w-full h-64 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1596438459194-f275f413d6ff?w=500&auto=format&fit=crop&q=80" alt="Scarlet Sage Velvet Selection" class="w-full h-64 object-cover" loading="lazy" />
               <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
@@ -347,7 +347,7 @@
               class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
-              <img src="https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=500&q=80" alt="Foxglove Flower" class="w-full h-64 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=500&auto=format&fit=crop&q=80" alt="Foxglove Flower Spire" class="w-full h-64 object-cover" loading="lazy" />
               <div class="absolute right-3 top-3 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition duration-300 z-20">
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-regular fa-heart text-xs"></i></button>
                 <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-charcoal hover:bg-blush-dark hover:text-white transition shadow"><i class="fa-solid fa-arrows-left-right text-xs"></i></button>
@@ -372,7 +372,7 @@
 
           <div class="rounded-2xl overflow-hidden shadow-sm">
             <img src="https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=800&q=80"
-                 alt="Florist workshop layout arrangement" class="w-full h-96 md:h-[450px] object-cover" loading="lazy" />
+                 alt="Florist studio workshop layout" class="w-full h-96 md:h-[450px] object-cover" loading="lazy" />
           </div>
 
           <div class="space-y-6">
@@ -434,7 +434,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-30%</span>
-              <img src="https://images.unsplash.com/photo-1596438459194-f275f413d6ff?w=500&q=80" alt="Lily Majesty Palm" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1596438459194-f275f413d6ff?w=500&auto=format&fit=crop&q=80" alt="Lily Majesty Palm" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -450,7 +450,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-15%</span>
-              <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=500&q=80" alt="Mini Roses" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=500&auto=format&fit=crop&q=80" alt="Mini Roses Arrangement" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -466,7 +466,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
-              <img src="https://images.unsplash.com/photo-1548460977-6c06e5b01f18?w=500&q=80" alt="Spring Snowflake" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=500&auto=format&fit=crop&q=80" alt="Spring Snowflake Petals" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -481,7 +481,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-30%</span>
-              <img src="https://images.unsplash.com/photo-1563241527-3004b7be0afc?w=500&q=80" alt="Nest Bouquet" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=500&auto=format&fit=crop&q=80" alt="Nest Bouquet Premium Selection" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
@@ -497,7 +497,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-10%</span>
-              <img src="https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?w=500&q=80" alt="Sweet Alyssum" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?w=500&q=80" alt="Sweet Alyssum Bouquet" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -512,7 +512,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-25%</span>
-              <img src="https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=500&q=80" alt="Summer Savory" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=500&q=80" alt="Summer Savory Display" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -528,7 +528,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-blush-dark text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">-15%</span>
-              <img src="https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=500&q=80" alt="Rock Bouquet" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&auto=format&fit=crop&q=80" alt="Rock Bouquet Crimson Version" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
@@ -543,7 +543,7 @@
               class="featured-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition group relative">
             <div class="card-img-wrap relative">
               <span class="absolute top-3 left-3 bg-charcoal text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10">New</span>
-              <img src="https://images.unsplash.com/photo-1605444404823-55c1cdfb7fba?w=500&q=80" alt="Majesty Palm" class="w-full h-56 object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1533616688419-b7a585564566?w=500&auto=format&fit=crop&q=80" alt="Majesty Palm Violet Bundle" class="w-full h-56 object-cover" loading="lazy" />
             </div>
             <div class="p-4 text-center">
               <div class="stars text-xs mb-1.5 justify-center flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
@@ -844,7 +844,7 @@
         stars:    4,
         desc:     'A pristine white tulip arrangement that captures the delicate first breath of spring.',
         images: [
-          'https://images.unsplash.com/photo-1487530811015-780d4c6cd4ce?w=800&q=80',
+          'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600&auto=format&fit=crop&q=80',
           'https://images.unsplash.com/photo-1457089328109-e5d9bd499191?w=800&q=80'
         ],
       },
@@ -856,7 +856,7 @@
         original: '',
         stars:    5,
         desc:     'Lush garden peonies in blush and cream, cradled in a rounded nest silhouette.',
-        images: ['https://images.unsplash.com/photo-1549226755-27e69e08e0d9?w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&auto=format&fit=crop&q=80'],
       },
       'scarlet-sage': {
         name:     'Scarlet Sage',
@@ -866,7 +866,7 @@
         original: '$45.00',
         stars:    4,
         desc:     'Vivid magenta blooms that command attention the moment they enter a room.',
-        images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1596438459194-f275f413d6ff?w=500&auto=format&fit=crop&q=80'],
       },
       'foxglove-flower': {
         name:     'Foxglove Flower',
@@ -876,7 +876,7 @@
         original: '',
         stars:    4.5,
         desc:     'Tall, stately foxglove spires in shades of violet and soft lavender.',
-        images: ['https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1519378058457-4c29a0a2efac?w=500&q=80'],
       },
       'lily-majesty': {
         name:     'Lily Majesty Palm',
@@ -926,7 +926,7 @@
         original: '',
         stars:    4,
         desc:     'Deep crimson roses and dark foliage make the Rock Bouquet a dramatic statement.',
-        images: ['https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80'],
       },
       'majesty-palm': {
         name:     'Majesty Palm',
@@ -936,7 +936,7 @@
         original: '$29.00',
         stars:    4.5,
         desc:     'Soft violet tulips loosely gathered in a natural, unstructured bouquet layout.',
-        images: ['https://images.unsplash.com/photo-1605444404823-55c1cdfb7fba?w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1533616688419-b7a585564566?w=600&auto=format&fit=crop&q=80'],
       }
     };
 
@@ -982,7 +982,7 @@
       });
     });
 
-    /* ── Modal Control Logic ── */
+    /* ── Modal & Cart State Controls ── */
     const modal = document.getElementById('product-modal');
     const mainImg = document.getElementById('modal-main-img');
     const thumbsWrap = document.getElementById('modal-thumbs');
@@ -995,8 +995,11 @@
     const qtyEl = document.getElementById('modal-qty');
     const toast = document.getElementById('cart-toast');
     const toastMsg = document.getElementById('cart-toast-msg');
+    const cartBadge = document.getElementById('cart-badge');
+    
     let activeProduct = null;
     let qty = 1;
+    let totalCartItems = 0;
 
     function buildStars(rating) {
       let html = '';
@@ -1042,6 +1045,12 @@
 
     function addToCart() {
       if (!activeProduct) return;
+      
+      // Update global count state metrics dynamically
+      totalCartItems += qty;
+      cartBadge.textContent = totalCartItems;
+      cartBadge.classList.remove('hidden');
+      
       toastMsg.textContent = `${qty} × ${activeProduct.name} added to cart!`;
       toast.classList.remove('hidden');
       setTimeout(() => { toast.classList.add('hidden'); }, 3000);
@@ -1049,7 +1058,7 @@
 
     document.querySelectorAll('[data-product-id]').forEach(card => {
       card.addEventListener('click', (e) => {
-        if (e.target.closest('button')) return; // Avoid triggering modal if internal toolbar button is clicked
+        if (e.target.closest('button')) return; 
         openModal(card.dataset.productId);
       });
     });
